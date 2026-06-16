@@ -12,6 +12,13 @@
     padding: 0;
 }
 
+input[readonly] {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 14px;
@@ -20,10 +27,70 @@ body {
     min-height: 100vh;
     padding: 30px 16px;
 }
+.risk-wrapper {
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+}
+
+.risk-left {
+    width: 60%;
+    align-self: flex-start;
+    margin-left: 0;    /* remove the 50px */
+}
+
+.risk-right {
+    width: 40%;
+    align-self: flex-start;
+    margin-left: 0;    /* remove the 50px */
+}
+table.risk {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+table.risk th,
+table.risk td {
+    border: 1px solid #cbd5e0;
+    padding: 4px 6px;
+    text-align: center;
+    height: 32px;
+}
+
+table.risk th {
+    background-color: #ebf4ff;
+    font-size: 11px;
+}
+
+table.risk input[type="text"],
+table.risk input[type="number"] {
+    width: 100%;
+    height: 24px;
+    font-size: 11px;
+    padding: 0 4px;
+    box-sizing: border-box;
+}
+table.risk th:nth-child(1) { width: 45%; }   /* Risk Description — biggest */
+table.risk th:nth-child(2) { width: 15%; }   /* Impact Score */
+table.risk th:nth-child(3) { width: 15%; }   /* Freq Score */
+table.risk th:nth-child(4) { width: 25%; }   /* Risk Score */
+
+fieldset {
+    overflow: hidden;
+}
+
+.boxes {
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
 
 /* ---------- Container ---------- */
 .container {
-    max-width: 52em;
+    max-width: 75em;
     margin: 0 auto;
     background-color: #ffffff;
     border-radius: 8px;
@@ -213,12 +280,14 @@ body {
 img {
     display: block;
     max-width: 600px;
-    margin: 10px;
+    margin: 0 auto 20px auto;
     padding-bottom: 25px;
+    align-items: center;
 }
 
 /* ---------- Submit Button ---------- */
-button[type="submit"] {
+button[type="submit"],
+button[type="button"] {
     display: block;
     width: 100%;
     margin: 10px auto 0 auto;
@@ -235,9 +304,14 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #2c5282;
+    background-color: #d82323;
     transform: translateY(-1px);
 
+}
+
+button[type="button"]:hover {
+    background-color: #0c2858;
+    transform: translateY(-1px);
 }
 
 button[type="submit"]:active {
@@ -285,5 +359,83 @@ body {
 
     input[type="number"] {
         width: 100%;
+    }
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1em;
+        max-width: 100%;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    /* Stack labels and inputs vertically */
+    td {
+        display: block;
+        width: 100%;
+        padding: 6px 0;
+    }
+
+    td:first-child {
+        width: auto;
+        font-weight: 600;
+    }
+
+    select,
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Risk table side-by-side becomes stacked */
+    .risk-wrapper {
+        flex-direction: column;
+    }
+
+    .risk-left,
+    .risk-right {
+        width: 100%;
+    }
+
+    table.risk {
+        font-size: 10px;
+
+    }
+
+    table.risk th,
+    table.risk td {
+        padding: 4px;
+    }
+
+    button[type="submit"],
+    button[type="button"] {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 12px;
+        font-size: 16px;
+        /* easier to tap */
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+
+    img {
+        max-width: 200px;
     }
 }
