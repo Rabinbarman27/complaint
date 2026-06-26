@@ -78,10 +78,21 @@ table.risk input[type="number"] {
     box-sizing: border-box;
 }
 
-table.risk th:nth-child(1) { width: 45%; }
-table.risk th:nth-child(2) { width: 15%; }
-table.risk th:nth-child(3) { width: 15%; }
-table.risk th:nth-child(4) { width: 25%; }
+table.risk th:nth-child(1) {
+    width: 45%;
+}
+
+table.risk th:nth-child(2) {
+    width: 15%;
+}
+
+table.risk th:nth-child(3) {
+    width: 15%;
+}
+
+table.risk th:nth-child(4) {
+    width: 25%;
+}
 
 fieldset {
     overflow: hidden;
@@ -285,6 +296,19 @@ img {
     align-items: center;
 }
 
+.formnobox {
+    display: inline-block;
+    min-width: 40px;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: #1a365d;
+    background-color: #ebf4ff;
+    border: 1px solid#a0aec0;
+    border-radius: 4px;
+    padding: 2px 10px;
+    text-align: center;
+}
+
 /* ---------- Buttons ---------- */
 button[type="submit"],
 button[type="button"] {
@@ -292,7 +316,7 @@ button[type="button"] {
     width: 100%;
     margin: 10px auto 0 auto;
     padding: 10px 40px;
-    background-color: #2b6cb0;
+    background-color: #303655;
     color: #fff;
     font-size: 15px;
     font-weight: 600;
@@ -309,7 +333,7 @@ button[type="submit"]:hover {
 }
 
 button[type="button"]:hover {
-    background-color: #0c2858;
+    background-color: #2f5494;
     transform: translateY(-1px);
 }
 
@@ -370,9 +394,12 @@ body {
     }
 
     td:first-child {
-        white-space: normal;  /* allow wrapping */
-        width: auto;          /* don't force 220px */
-        min-width: 120px;     /* but keep a minimum */
+        white-space: normal;
+        /* allow wrapping */
+        width: auto;
+        /* don't force 220px */
+        min-width: 120px;
+        /* but keep a minimum */
         font-weight: 600;
     }
 
@@ -468,9 +495,67 @@ body {
         padding: 1px;
         height: 24px;
     }
+
     img {
-    max-width: 300px; /* increase this */
-    margin-bottom: 10px;
-   
+        max-width: 300px;
+        /* increase this */
+        margin-bottom: 10px;
+
+    }
 }
+
+/* ── Accordion ───────────────────────────────────────────── */
+.accordion-section {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    width: 100%;
+    text-align: left;
+    background: #303655;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.accordion-icon {
+    font-size: 20px;
+    width: 18px;
+    display: inline-block;
+    text-align: center;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 18px;
+}
+
+.accordion-section.open .accordion-content {
+    max-height: none;
+    padding: 16px 18px;
+}
+
+.form-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+}
+
+.form-footer button {
+   
+    font-size: 14px;
+    margin: 0 40px;
 }

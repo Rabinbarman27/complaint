@@ -11,31 +11,37 @@
 <body>
     <div class="container">
         <img src="BBH-logo-1-1B.png" alt="" srcset="">
-        <h1>Complaint and Feedback</h1>
+        <h1>Complaint and Feedback Form</h1>
 
         <form onsubmit="return validateform()">
-            <fieldset class="overall">
 
-                <div class="step active">
-                    <!-- BASIC INFORMATION -->
+            <!-- BASIC INFORMATION -->
+            <div class="accordion-section open" data-section="0">
+                <button type="button" class="accordion-header" onclick="toggleSection(0)">
+                    <span class="accordion-icon">−</span>
+                    <span>Basic Information</span>
+                </button>
+                <div class="accordion-content">
                     <fieldset class="boxes">
-                        <legend>Basic Information</legend>
                         <table>
                             <tr class="blocks">
-                                <td>Form No.:</td>
-                                <td><span id="formno."></span></td>
-                            </tr>
-                            <tr class="blocks">
+
                                 <td><label>Operation:</label></td>
                                 <td>
-                                    <input type="checkbox" name="operation" id="complaint" value="Complaint">
+                                    <input type="radio" name="operation" id="complaint" value="Complaint">
                                     <label for="complaint">Complaint</label>
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="operation" id="feedback" value="Feedback">
+                                    <input type="radio" name="operation" id="feedback" value="Feedback">
                                     <label for="feedback">Feedback</label>
                                 </td>
+                               
+                                <td>
+                                    <span id="formno" class="formnobox"></span>
+                                    <input type="hidden" name="form_no" id="formno_hidden">
+                                </td>
                             </tr>
+
                             <tr>
                                 <td colspan="2"><span id="operation_empty" style="color:red;"></span></td>
                             </tr>
@@ -57,17 +63,27 @@
                             </tr>
                             <tr class="blocks">
                                 <td><label for="date">Date:</label></td>
-                                <td><input type="date" name="date" id="date"></td>
+                                <td>
+                                    <span id="date"></span>
+                                    <input type="hidden" name="date" id="date_hidden">
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="2"><span id="formDate_empty" style="color:red;"></span></td>
                             </tr>
                         </table>
                     </fieldset>
+                </div>
+            </div>
 
-                    <!-- INCIDENT DETAILS -->
+            <!-- INCIDENT DETAILS -->
+            <div class="accordion-section" data-section="1">
+                <button type="button" class="accordion-header" onclick="toggleSection(1)">
+                    <span class="accordion-icon">+</span>
+                    <span>Incident Details</span>
+                </button>
+                <div class="accordion-content">
                     <fieldset class="boxes">
-                        <legend>Incident Details</legend>
                         <table>
                             <tr class="blocks">
                                 <td><label for="department_section">Department / Section:</label></td>
@@ -100,10 +116,17 @@
                             </tr>
                         </table>
                     </fieldset>
+                </div>
+            </div>
 
-                    <!-- ERROR CLASSIFICATION -->
+            <!-- ERROR CLASSIFICATION -->
+            <div class="accordion-section" data-section="2">
+                <button type="button" class="accordion-header" onclick="toggleSection(2)">
+                    <span class="accordion-icon">+</span>
+                    <span>Error Classification</span>
+                </button>
+                <div class="accordion-content">
                     <fieldset class="boxes">
-                        <legend>Error Classification</legend>
                         <table>
                             <tr class="blocks">
                                 <td><label for="main_category">Error Category:</label></td>
@@ -203,10 +226,17 @@
                             </tr>
                         </table>
                     </fieldset>
+                </div>
+            </div>
 
-                    <!-- ERROR ANALYSIS -->
+            <!-- ERROR ANALYSIS -->
+            <div class="accordion-section" data-section="3">
+                <button type="button" class="accordion-header" onclick="toggleSection(3)">
+                    <span class="accordion-icon">+</span>
+                    <span>Error Analysis</span>
+                </button>
+                <div class="accordion-content">
                     <fieldset class="boxes">
-                        <legend>Error Analysis</legend>
                         <table>
                             <tr class="blocks">
                                 <td>Choose from below:</td>
@@ -250,13 +280,17 @@
                             </tr>
                         </table>
                     </fieldset>
-                    <button type="button" onclick="nextStep()">Next</button>
-
                 </div>
-                <div class="step">
-                    <!-- RISK SCORE -->
+            </div>
+
+            <!-- RISK SCORE -->
+            <div class="accordion-section" data-section="4">
+                <button type="button" class="accordion-header" onclick="toggleSection(4)">
+                    <span class="accordion-icon">+</span>
+                    <span>Risk Score</span>
+                </button>
+                <div class="accordion-content">
                     <fieldset class="boxes">
-                        <legend>Risk Score</legend>
                         <div class="risk-wrapper">
                             <div class="risk-left">
                                 <table class="risk">
@@ -327,7 +361,10 @@
                                     </tr>
                                     <tr class="blocks">
                                         <td><label for="risk_score">Average Risk Score:</label></td>
-                                        <td><span id="risk_score"></span></td>
+                                        <td>
+                                            <span id="risk_score"></span>
+                                            <input type="hidden" name="risk_score" id="risk_score_hidden">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"><span id="risk_score_evaluation" style="color:red;"></span></td>
@@ -336,9 +373,17 @@
                             </div>
                         </div>
                     </fieldset>
-                    <!-- ACTIONS TAKEN -->
+                </div>
+            </div>
+
+            <!-- ACTIONS TAKEN -->
+            <div class="accordion-section" data-section="5">
+                <button type="button" class="accordion-header" onclick="toggleSection(5)">
+                    <span class="accordion-icon">+</span>
+                    <span>Actions Taken</span>
+                </button>
+                <div class="accordion-content">
                     <fieldset class="boxes">
-                        <legend>Actions Taken</legend>
                         <table>
                             <tr class="blocks">
                                 <td><label for="immediate_correction">Immediate Correction:</label></td>
@@ -392,21 +437,21 @@
                             </tr>
                         </table>
                     </fieldset>
-                    <br>
-                    <button type="button" onclick="prevStep()">Back</button>
-                    <button type="submit">Submit</button>
-                    <div style="margin: 20px auto; max-width: 400px; text-align: center;">
-                        <button type="button" onclick="openExportModal()">Export Data</button>
-                    </div>
                 </div>
+            </div>
 
-            </fieldset>
+            <!-- SUBMIT / EXPORT (always visible, outside accordion) -->
+            <div class="form-footer">
+                <button type="submit">Submit</button>
+                <button type="button" onclick="openExportModal()">Export Data</button>
+            </div>
 
         </form>
     </div>
 
     <script src="index.js"></script>
-    <div id="exportModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div id="exportModal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
         <div style="background:#fff; margin:10% auto; padding:30px; border-radius:8px; max-width:400px;">
             <h3 style="margin-bottom:20px; color:#1a365d;">Export Feedback Data</h3>
             <label>From:</label><br>
