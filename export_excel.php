@@ -1,31 +1,57 @@
 <?php
+
+session_start();
+if (!isset($_SESSION['employee_id']) && !isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    die("Unauthorized. Please log in.");
+}
 include 'connection.php';
 
-$from = pg_escape_string($conn, $_GET['from_date'] ?? '');
-$to   = pg_escape_string($conn, $_GET['to_date'] ?? '');
+$from = trim($_GET['from_date'] ?? '');
+$to   = trim($_GET['to_date'] ?? '');
 
+// ---- Validate dates ----
 if (empty($from) || empty($to)) {
     die("Invalid date range.");
 }
 
-$sql = "SELECT * FROM feedback_complaint_data 
-        WHERE Date_of_submission BETWEEN '$from' AND '$to'
-        ORDER BY Date_of_submission ASC";
+$from_dt = DateTime::createFromFormat('Y-m-d', $from);
+$to_dt   = DateTime::createFromFormat('Y-m-d', $to);
 
-$result = pg_query($conn, $sql);
-
-if (!$result) {
-    die("Query failed: " . pg_last_error($conn));
+if (!$from_dt || $from_dt->format('Y-m-d') !== $from ||
+    !$to_dt   || $to_dt->format('Y-m-d')   !== $to) {
+    die("Invalid date format.");
 }
 
+if ($from_dt > $to_dt) {
+    die("From date cannot be after To date.");
+}
+
+// ---- Query using pg_query_params (SQL injection safe) ----
+$sql = "SELECT * FROM feedback_complaint_data 
+        WHERE Date_of_submission BETWEEN $1 AND $2
+        ORDER BY Date_of_submission ASC";
+
+$result = pg_query_params($conn, $sql, [$from, $to]);
+
+if (!$result) {
+    error_log("Export Excel query failed: " . pg_last_error($conn));
+    die("Something went wrong. Please try again.");
+}
+
+// ---- Sanitize filename ----
+$safe_from = preg_replace('/[^0-9\-]/', '', $from);
+$safe_to   = preg_replace('/[^0-9\-]/', '', $to);
+
 header("Content-Type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=feedback_data_{$from}_to_{$to}.xls");
+header("Content-Disposition: attachment; filename=feedback_data_{$safe_from}_to_{$safe_to}.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 ?>
 <table border="1">
     <tr>
         <th>ID</th>
+        <th>Form No.</th>
         <th>Operation</th>
         <th>Given By</th>
         <th>Date</th>
@@ -40,6 +66,7 @@ header("Expires: 0");
         <th>Root Cause</th>
         <th>Avg Impact Score</th>
         <th>Avg Freq Score</th>
+        <th>Avg Risk Score</th>
         <th>Immediate Correction</th>
         <th>Corrective Action</th>
         <th>Preventive Action</th>
@@ -63,6 +90,7 @@ header("Expires: 0");
     <?php while ($row = pg_fetch_assoc($result)): ?>
     <tr>
         <td><?= htmlspecialchars($row['id'] ?? '') ?></td>
+        <td><?= htmlspecialchars($row['form_no'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['operation'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['given_by'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['date_of_submission'] ?? '') ?></td>
@@ -77,6 +105,7 @@ header("Expires: 0");
         <td><?= htmlspecialchars($row['root_cause'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['avg_impact_score'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['avg_freq_score'] ?? '') ?></td>
+        <td><?= htmlspecialchars($row['avg_risk_score'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['immediate_correction'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['corrective_action'] ?? '') ?></td>
         <td><?= htmlspecialchars($row['preventive_action'] ?? '') ?></td>

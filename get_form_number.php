@@ -1,4 +1,10 @@
 <?php
+
+session_start();
+if (!isset($_SESSION['employee_id'])) {
+    http_response_code(401);
+    exit;
+}
 include 'connection.php';
 
 $result = pg_query($conn, "SELECT last_value + 1 AS next_id FROM feedback_complaint_data_id_seq");

@@ -74,3 +74,11 @@ CREATE TABLE feedback_complaint_data (
     freq_score5 INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+$2y$12$EPtfqXwmZW55vxuszdHFF.1PPIYF9TNJVorJthD81xbFVM7rJ9HaC
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    employee_id VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL
+);
+INSERT INTO admins (admin_id, password_hash) 
+VALUES ('ADMIN001', '$2y$12$y6.YD6NyD6In6YO52rKNSeVJII21Dht1w99f2KPgf4PqoViQpzvWq');

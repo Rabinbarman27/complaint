@@ -1,26 +1,50 @@
 <?php
 
+session_start();
+if (!isset($_SESSION['employee_id']) && !isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    die("Unauthorized. Please log in.");
+}
 include 'connection.php';
 
-$from = pg_escape_string($conn, $_GET['from_date'] ?? '');
-$to   = pg_escape_string($conn, $_GET['to_date'] ?? '');
+$from = trim($_GET['from_date'] ?? '');
+$to   = trim($_GET['to_date'] ?? '');
 
+// ---- Validate dates ----
 if (empty($from) || empty($to)) {
     die("Invalid date range.");
 }
 
-$sql = "SELECT * FROM feedback_complaint_data 
-        WHERE Date_of_submission BETWEEN '$from' AND '$to'
-        ORDER BY Date_of_submission ASC";
+$from_dt = DateTime::createFromFormat('Y-m-d', $from);
+$to_dt   = DateTime::createFromFormat('Y-m-d', $to);
 
-$result = pg_query($conn, $sql);
-
-if (!$result) {
-    die("Query failed: " . pg_last_error($conn));
+if (!$from_dt || $from_dt->format('Y-m-d') !== $from ||
+    !$to_dt   || $to_dt->format('Y-m-d')   !== $to) {
+    die("Invalid date format.");
 }
 
+if ($from_dt > $to_dt) {
+    die("From date cannot be after To date.");
+}
+
+// ---- Query using pg_query_params (SQL injection safe) ----
+$sql = "SELECT * FROM feedback_complaint_data 
+        WHERE Date_of_submission BETWEEN $1 AND $2
+        ORDER BY Date_of_submission ASC";
+
+$result = pg_query_params($conn, $sql, [$from, $to]);
+
+if (!$result) {
+    error_log("Export CSV query failed: " . pg_last_error($conn));
+    die("Something went wrong. Please try again.");
+}
+
+// ---- Sanitize filename ----
+$safe_from = preg_replace('/[^0-9\-]/', '', $from);
+$safe_to   = preg_replace('/[^0-9\-]/', '', $to);
+
 header("Content-Type: text/csv");
-header("Content-Disposition: attachment; filename=feedback_data_{$from}_to_{$to}.csv");
+header("Content-Disposition: attachment; filename=feedback_data_{$safe_from}_to_{$safe_to}.csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 
@@ -28,10 +52,10 @@ $output = fopen("php://output", "w");
 
 // Header row
 fputcsv($output, [
-    'ID', 'Operation', 'Given By', 'Date', 'Department/Section',
+    'ID', 'Form No.', 'Operation', 'Given By', 'Date', 'Department/Section',
     'Incident Description', 'Main Error Category', 'Sub Error Category',
     'Active Error', 'Latent Error', 'Cognitive Error', 'Non-Cognitive Error',
-    'Root Cause', 'Avg Impact Score', 'Avg Freq Score',
+    'Root Cause', 'Avg Impact Score', 'Avg Freq Score', 'Avg Risk Score',
     'Immediate Correction', 'Corrective Action', 'Preventive Action', 'Patient Consequences',
     'Risk Description 1', 'Impact Score 1', 'Freq Score 1',
     'Risk Description 2', 'Impact Score 2', 'Freq Score 2',
@@ -40,10 +64,11 @@ fputcsv($output, [
     'Risk Description 5', 'Impact Score 5', 'Freq Score 5'
 ]);
 
-// Data rows — pg_fetch_assoc instead of mysqli_fetch_assoc
+// Data rows
 while ($row = pg_fetch_assoc($result)) {
     fputcsv($output, [
         $row['id'] ?? '',
+        $row['form_no'] ?? '',
         $row['operation'] ?? '',
         $row['given_by'] ?? '',
         $row['date_of_submission'] ?? '',
@@ -58,6 +83,7 @@ while ($row = pg_fetch_assoc($result)) {
         $row['root_cause'] ?? '',
         $row['avg_impact_score'] ?? '',
         $row['avg_freq_score'] ?? '',
+        $row['avg_risk_score'] ?? '',
         $row['immediate_correction'] ?? '',
         $row['corrective_action'] ?? '',
         $row['preventive_action'] ?? '',
@@ -82,5 +108,4 @@ while ($row = pg_fetch_assoc($result)) {
 
 fclose($output);
 pg_close($conn);
-
 ?>

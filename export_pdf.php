@@ -1,21 +1,42 @@
 <?php
+
+session_start();
+if (!isset($_SESSION['employee_id']) && !isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    die("Unauthorized. Please log in.");
+}
 include 'connection.php';
 
-$from = pg_escape_string($conn, $_GET['from_date'] ?? '');
-$to   = pg_escape_string($conn, $_GET['to_date'] ?? '');
+$from = trim($_GET['from_date'] ?? '');
+$to   = trim($_GET['to_date'] ?? '');
 
+// ---- Validate dates ----
 if (empty($from) || empty($to)) {
     die("Invalid date range.");
 }
 
+$from_dt = DateTime::createFromFormat('Y-m-d', $from);
+$to_dt   = DateTime::createFromFormat('Y-m-d', $to);
+
+if (!$from_dt || $from_dt->format('Y-m-d') !== $from ||
+    !$to_dt   || $to_dt->format('Y-m-d')   !== $to) {
+    die("Invalid date format.");
+}
+
+if ($from_dt > $to_dt) {
+    die("From date cannot be after To date.");
+}
+
+// ---- Query using pg_query_params (SQL injection safe) ----
 $sql = "SELECT * FROM feedback_complaint_data 
-        WHERE Date_of_submission BETWEEN '$from' AND '$to'
+        WHERE Date_of_submission BETWEEN $1 AND $2
         ORDER BY Date_of_submission ASC";
 
-$result = pg_query($conn, $sql);
+$result = pg_query_params($conn, $sql, [$from, $to]);
 
 if (!$result) {
-    die("Query failed: " . pg_last_error($conn));
+    error_log("Export PDF query failed: " . pg_last_error($conn));
+    die("Something went wrong. Please try again.");
 }
 ?>
 <!DOCTYPE html>
@@ -106,6 +127,7 @@ while ($row = pg_fetch_assoc($result)):
 <div class="entry">
     <h3>Entry #<?= $count ?> — <?= htmlspecialchars($row['date_of_submission'] ?? '') ?></h3>
     <table>
+        <tr><td class="label">Form No.</td><td><?= htmlspecialchars($row['form_no'] ?? '') ?></td></tr>
         <tr><td class="label">Operation</td><td><?= htmlspecialchars($row['operation'] ?? '') ?></td></tr>
         <tr><td class="label">Given By</td><td><?= htmlspecialchars($row['given_by'] ?? '') ?></td></tr>
         <tr><td class="label">Date</td><td><?= htmlspecialchars($row['date_of_submission'] ?? '') ?></td></tr>
@@ -120,6 +142,7 @@ while ($row = pg_fetch_assoc($result)):
         <tr><td class="label">Root Cause</td><td><?= htmlspecialchars($row['root_cause'] ?? '') ?></td></tr>
         <tr><td class="label">Avg Impact Score</td><td><?= htmlspecialchars($row['avg_impact_score'] ?? '') ?></td></tr>
         <tr><td class="label">Avg Frequency Score</td><td><?= htmlspecialchars($row['avg_freq_score'] ?? '') ?></td></tr>
+        <tr><td class="label">Avg Risk Score</td><td><?= htmlspecialchars($row['avg_risk_score'] ?? '') ?></td></tr>
         <tr><td class="label">Immediate Correction</td><td><?= htmlspecialchars($row['immediate_correction'] ?? '') ?></td></tr>
         <tr><td class="label">Corrective Action</td><td><?= htmlspecialchars($row['corrective_action'] ?? '') ?></td></tr>
         <tr><td class="label">Preventive Action</td><td><?= htmlspecialchars($row['preventive_action'] ?? '') ?></td></tr>
