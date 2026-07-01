@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
 if (!isset($_SESSION['employee_id'])) {
     header('Content-Type: application/json');
     http_response_code(401);
@@ -11,10 +13,10 @@ include 'connection.php';
 header('Content-Type: application/json');
 
 $sql = "SELECT id, form_no, Operation, Given_by, Date_of_submission, Depatment_section,
-               Incident_description, Main_Error_category, Sub_Error_categor,
-               avg_impact_score, avg_freq_score, avg_risk_score,
-               root_cause, immediate_correction, corrective_action,
-               preventive_action, patient_consequences
+        Incident_description, Main_Error_category, Sub_Error_categor,
+        avg_impact_score, avg_freq_score, avg_risk_score,
+        root_cause, immediate_correction, corrective_action,
+        preventive_action, patient_consequences
         FROM feedback_complaint_data
         ORDER BY id DESC";
 

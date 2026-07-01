@@ -44,6 +44,13 @@ function handleLogin() {
 
 // Allow pressing Enter in either field to submit
 document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('pageshow', function () {
+        const btn = document.getElementById('login_btn');
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Login';
+        }
+    });
     document.getElementById('employee_id').focus();
     document.getElementById('login_form').addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {

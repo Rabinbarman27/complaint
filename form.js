@@ -238,8 +238,6 @@ function validateform() {
             return res.text().then(text => ({ status: res.status, ok: res.ok, text }));
         })
         .then(({ status, ok, text }) => {
-            console.log('submit.php status:', status, 'ok:', ok);
-            console.log('submit.php raw response:', text);
 
             let data;
             try {
@@ -256,7 +254,7 @@ function validateform() {
                 alert('Form submitted successfully!');
                 document.querySelector('form').reset();
                 openSection(0);
-                updateSub(); 
+                updateSub();
                 updateFormNumber();
             } else {
                 alert('Error: ' + data.error);

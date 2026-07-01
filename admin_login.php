@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
 include 'connection.php';
 header('Content-Type: application/json');
 
@@ -13,7 +15,8 @@ if (empty($admin_id) || empty($password)) {
     exit;
 }
 
-$result = pg_query_params($conn,
+$result = pg_query_params(
+    $conn,
     "SELECT admin_id, password_hash FROM admins WHERE admin_id = $1",
     [$admin_id]
 );
@@ -37,4 +40,3 @@ if ($row && password_verify($password, $hashToCheck)) {
 }
 
 pg_close($conn);
-?>

@@ -34,3 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+window.addEventListener('pageshow', function () {
+    document.documentElement.style.visibility = 'visible';
+});
