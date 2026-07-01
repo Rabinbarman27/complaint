@@ -34,6 +34,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-window.addEventListener('pageshow', function () {
-    document.documentElement.style.visibility = 'visible';
+window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+        // Page loaded from cache (back button) — recheck session
+        fetch('check_session.php')
+            .then(res => res.json())
+            .then(result => {
+                if (!result.loggedIn) {
+                    window.location.href = 'index.html';
+                } else {
+                    document.documentElement.style.visibility = 'visible';
+                }
+            })
+            .catch(() => { window.location.href = 'index.html'; });
+    }
 });

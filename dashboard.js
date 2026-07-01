@@ -37,3 +37,12 @@ window.onclick = function (e) {
     const modal = document.getElementById('exportModal');
     if (e.target === modal) closeExportModal();
 }
+function handleLogout() {
+    fetch('logoutdashboardemployee.php', { method: 'POST' })
+        .then(() => {
+            window.location.href = 'index.html';
+        })
+        .catch(() => {
+            window.location.href = 'index.html';
+        });
+}

@@ -59,3 +59,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+function toggleEmpPass() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eye_icon');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.src = 'icons8-closed-eye-50.png'; // ← fixed
+    } else {
+        input.type = 'password';
+        icon.src = 'icons8-eye-50.png';
+    }
+}

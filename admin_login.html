@@ -38,6 +38,15 @@
             margin-bottom: 16px;
         }
 
+        .eye-img {
+            width: 18px !important;
+            height: 18px !important;
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 20px !important;
+        }
+
         .admin-login-card .logo-wrap {
             display: flex;
             flex-direction: column;
@@ -96,13 +105,23 @@
             min-height: 18px;
         }
 
-        body.admin-login-page img {
+        /* Target ONLY the logo, not all images */
+        .logo-wrap img {
             display: block !important;
             width: 300px !important;
             max-width: 300px !important;
             height: auto !important;
             margin: 0 auto 10px auto !important;
             padding: 0 !important;
+        }
+
+        .eye-img {
+            width: 20px !important;
+            height: 20px !important;
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 20px !important;
         }
     </style>
 </head>
@@ -119,9 +138,15 @@
             <input type="text" id="admin_id" name="admin_id" placeholder="Enter Admin ID" autocomplete="username"
                 required>
 
-            <label for="admin_password">Password:</label>
-            <input type="password" id="admin_password" name="admin_password" placeholder="Enter Password"
-                autocomplete="current-password" required>
+            <label for="password">Password:</label>
+            <div style="position: relative; margin-bottom: 16px;">
+                <input type="password" id="password" name="password" placeholder="Enter your password"
+                    autocomplete="current-password" required style="width:100%; padding-right:35px; margin-bottom:0;">
+                <span onclick="toggleEmpPass()"
+                    style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                    <img id="eye_icon" src="icons8-eye-50.png" class="eye-img">
+                </span>
+            </div>
 
             <span id="admin_login_error"></span>
             <button type="submit" id="admin_login_btn" onclick="handleAdminLogin()">Login as Admin</button>

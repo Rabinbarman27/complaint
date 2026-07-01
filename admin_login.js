@@ -1,6 +1,6 @@
 function handleAdminLogin() {
     const adminId = document.getElementById('admin_id').value.trim();
-    const password = document.getElementById('admin_password').value;
+    const password = document.getElementById('password').value;
     const errorEl = document.getElementById('admin_login_error');
     const loginBtn = document.getElementById('admin_login_btn');
 
@@ -58,3 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+function toggleEmpPass() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eye_icon');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.src = 'icons8-closed-eye-50.png'; // correct filename
+    } else {
+        input.type = 'password';
+        icon.src = 'icons8-eye-50.png';
+    }
+}
