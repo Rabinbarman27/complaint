@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Complaint &amp; Feedback System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .eye-img {
+            width: 20px !important;
+            height: 20px !important;
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 20px !important;
+        }
+    </style>
+</head>
+
+<body class="login-page">
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="BBH-logo-1-1B.png" alt="BBH Logo">
+
+            </div>
+
+            <h1 class="login-title">Employee Login</h1>
+
+            <form id="login_form" onsubmit="return false;">
+                <label for="employee_id">Employee ID:</label>
+                <input type="text" id="employee_id" name="employee_id" placeholder="Enter your Employee ID"
+                    autocomplete="username" required>
+
+                <label for="password">Password:</label>
+                <div style="position: relative; margin-bottom: 16px;">
+                    <input type="password" id="password" name="password" placeholder="Enter your password"
+                        autocomplete="current-password" required
+                        style="width:100%; padding-right:35px; margin-bottom:0;">
+                    <span onclick="toggleEmpPass()"
+                        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                        <img id="eye_icon" src="icons8-eye-50.png" class="eye-img">
+                    </span>
+                </div>
+                <span id="login_error"></span>
+                <button type="submit" id="login_btn" onclick="handleLogin()">Login</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

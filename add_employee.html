@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #fff;
+            padding: 36px 32px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            margin-bottom: 24px;
+            color: #1a365d;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+        button {
+            width: 100%;
+            padding: 11px;
+            background: #1a365d;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        button:hover { background: #14294a; }
+        #message {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Add Employee</h2>
+        <label for="employee_id">Employee ID</label>
+        <input type="text" id="employee_id" placeholder="e.g. EMP002">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" placeholder="Re-enter password">
+
+        <button onclick="addEmployee()">Add Employee</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function addEmployee() {
+            const employee_id = document.getElementById('employee_id').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm_password = document.getElementById('confirm_password').value;
+            const messageEl = document.getElementById('message');
+
+            messageEl.textContent = '';
+            messageEl.className = '';
+
+            if (!employee_id || !password || !confirm_password) {
+                messageEl.textContent = 'All fields are required.';
+                messageEl.className = 'error';
+                return;
+            }
+            if (password !== confirm_password) {
+                messageEl.textContent = 'Passwords do not match.';
+                messageEl.className = 'error';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('employee_id', employee_id);
+            formData.append('password', password);
+
+            fetch('admin/add_employee.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    messageEl.textContent = 'Employee added successfully!';
+                    messageEl.className = 'success';
+                    document.getElementById('employee_id').value = '';
+                    document.getElementById('password').value = '';
+                    document.getElementById('confirm_password').value = '';
+                } else {
+                    messageEl.textContent = data.error || 'Something went wrong.';
+                    messageEl.className = 'error';
+                }
+            })
+            .catch(err => {
+                messageEl.textContent = 'Network error. Please try again.';
+                messageEl.className = 'error';
+            });
+        }
+    </script>
+</body>
+</html>

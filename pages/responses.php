@@ -1,0 +1,57 @@
+<?php
+session_start();
+if (!isset($_SESSION['employee_id'])) {
+    header('Location: ../index.html');
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Responses</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="container responses-container">
+        <img src="../BBH-logo-1-1B.png" alt="" srcset="">
+        <h1>Submitted Responses</h1>
+
+        <div class="responses-top-bar">
+            <a href="dashboard.php" class="dashboard-btn">← Back to Dashboard</a>
+        </div>
+
+        <div id="responses_status">Loading responses…</div>
+
+        <div class="table-scroll">
+            <table class="responses-table" id="responses_table" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Form No.</th>
+                        <th>Submitted By</th>
+                        <th>Operation</th>
+                        <th>Given By</th>
+                        <th>Date</th>
+                        <th>Department</th>
+                        <th>Incident Description</th>
+                        <th>Error Category</th>
+                        <th>Sub Category</th>
+                        <th>Avg Impact</th>
+                        <th>Avg Freq</th>
+                        <th>Avg Risk</th>
+                        <th>Patient Consequences</th>
+                    </tr>
+                </thead>
+                <tbody id="responses_body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/responses.js"></script>
+</body>
+
+</html>

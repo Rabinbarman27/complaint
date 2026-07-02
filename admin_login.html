@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — Complaint & Feedback System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body.admin-login-page {
+            padding: 0 !important;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: url('360_F_1884750335_2qt7bWSriLN399ccQYoPUZAcRFc5gwMd.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .admin-login-card {
+            background: #fff;
+            padding: 40px 36px;
+            border-radius: 10px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Logo — small, left-aligned, no global img styles */
+        .admin-login-card .logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .eye-img {
+            width: 18px !important;
+            height: 18px !important;
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 20px !important;
+        }
+
+        .admin-login-card .logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .admin-login-card .logo-wrap h1 {
+            text-align: center;
+            color: #1a365d;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .admin-login-card label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .admin-login-card input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            height: auto;
+        }
+
+        .admin-login-card button {
+            width: 100%;
+            padding: 12px;
+            background: #1a365d;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+        }
+
+        .admin-login-card button:hover {
+            background: #2a4a7f;
+        }
+
+        #admin_login_error {
+            display: block;
+            color: red;
+            font-size: 13px;
+            margin-bottom: 12px;
+            min-height: 18px;
+        }
+
+        /* Target ONLY the logo, not all images */
+        .logo-wrap img {
+            display: block !important;
+            width: 300px !important;
+            max-width: 300px !important;
+            height: auto !important;
+            margin: 0 auto 10px auto !important;
+            padding: 0 !important;
+        }
+
+        .eye-img {
+            width: 20px !important;
+            height: 20px !important;
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: 20px !important;
+        }
+    </style>
+</head>
+
+<body class="admin-login-page">
+    <div class="admin-login-card">
+        <div class="logo-wrap">
+            <img src="BBH-logo-1-1B.png" alt="BBH Logo">
+            <h1>Admin Panel</h1>
+        </div>
+
+        <form id="admin_login_form" onsubmit="return false;">
+            <label for="admin_id">Admin ID:</label>
+            <input type="text" id="admin_id" name="admin_id" placeholder="Enter Admin ID" autocomplete="username"
+                required>
+
+            <label for="password">Password:</label>
+            <div style="position: relative; margin-bottom: 16px;">
+                <input type="password" id="password" name="password" placeholder="Enter your password"
+                    autocomplete="current-password" required style="width:100%; padding-right:35px; margin-bottom:0;">
+                <span onclick="toggleEmpPass()"
+                    style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                    <img id="eye_icon" src="icons8-eye-50.png" class="eye-img">
+                </span>
+            </div>
+
+            <span id="admin_login_error"></span>
+            <button type="submit" id="admin_login_btn" onclick="handleAdminLogin()">Login as Admin</button>
+        </form>
+    </div>
+    <script src="js/admin_login.js"></script>
+</body>
+
+</html>

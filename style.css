@@ -1,0 +1,831 @@
+/* =============================================
+   Complaint & Feedback Form — style.css
+   Theme: Clean medical / hospital form
+   ============================================= */
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+input[readonly] {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    background-color: #f0f4f8;
+    color: #2d3748;
+    min-height: 100vh;
+    padding: 30px 16px;
+}
+
+.risk-wrapper {
+    display: flex;
+    gap: 5px;
+    align-items: flex-start;
+}
+
+.risk-left {
+    flex: 6;
+    min-width: 0;
+    align-self: flex-start;
+    margin-left: 0;
+}
+
+.risk-right {
+    flex: 4;
+    min-width: 0;
+    align-self: flex-start;
+    margin-left: 0;
+}
+
+table.risk {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+table.risk th,
+table.risk td {
+    border: 1px solid #cbd5e0;
+    padding: 4px 6px;
+    text-align: center;
+    height: 32px;
+}
+
+table.risk th {
+    background-color: #ebf4ff;
+    font-size: 11px;
+}
+
+table.risk input[type="text"],
+table.risk input[type="number"] {
+    width: 100%;
+    height: 24px;
+    font-size: 11px;
+    padding: 0 4px;
+    box-sizing: border-box;
+}
+
+table.risk th:nth-child(1) {
+    width: 45%;
+}
+
+table.risk th:nth-child(2) {
+    width: 15%;
+}
+
+table.risk th:nth-child(3) {
+    width: 15%;
+}
+
+table.risk th:nth-child(4) {
+    width: 25%;
+}
+
+fieldset {
+    overflow: hidden;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    background-color: #f7fafc;
+}
+
+.boxes {
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ---------- Container ---------- */
+.container {
+    max-width: 75em;
+    width: 95%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2em 3em 3em 3em;
+    overflow: hidden;
+}
+
+/* ---------- Heading ---------- */
+h1 {
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #1a365d;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5em;
+    padding-bottom: 0.6em;
+    border-bottom: 3px solid #2b6cb0;
+}
+
+/* ---------- Fieldsets ---------- */
+fieldset.overall {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: #2b6cb0;
+    background-color: #ebf4ff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    border: 1px solid #bee3f8;
+    letter-spacing: 0.3px;
+}
+
+/* ---------- Table Layout ---------- */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    padding: 8px 10px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+/* First column — labels */
+td:first-child {
+    white-space: nowrap;
+    color: #4a5568;
+    font-weight: 500;
+    width: 220px;
+}
+
+/* ---------- Row Hover ---------- */
+tr.blocks {
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+tr.blocks:hover td {
+    color: #553c9a;
+    background-color: #faf5ff;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+/* ---------- Labels ---------- */
+label {
+    font-size: 14px;
+    color: #4a5568;
+    cursor: pointer;
+}
+
+/* ---------- Inputs, Selects ---------- */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    font-size: 13.5px;
+    color: #2d3748;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+input[type="number"] {
+    width: 80px;
+}
+
+select {
+    min-width: 200px;
+}
+
+/* ---------- Textarea ---------- */
+textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: #2d3748;
+    background-color: #fff;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+textarea:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+textarea::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* ---------- Checkboxes & Radios ---------- */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 15px;
+    height: 15px;
+    accent-color: #2b6cb0;
+    cursor: pointer;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+input[type="checkbox"]+label,
+input[type="radio"]+label {
+    vertical-align: middle;
+    margin-right: 16px;
+}
+
+/* ---------- Risk Score Span ---------- */
+#risk_score {
+    display: inline-block;
+    min-width: 40px;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: #c53030;
+    background-color: #fff5f5;
+    border: 1px solid #feb2b2;
+    border-radius: 4px;
+    padding: 2px 10px;
+    text-align: center;
+}
+
+body {
+    background-image: url('360_F_1884750335_2qt7bWSriLN399ccQYoPUZAcRFc5gwMd.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+img {
+    display: block;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    padding-bottom: 25px;
+    align-items: center;
+}
+
+.formnobox {
+    display: inline-block;
+    min-width: 40px;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: #1a365d;
+    background-color: #ebf4ff;
+    border: 1px solid#a0aec0;
+    border-radius: 4px;
+    padding: 2px 10px;
+    text-align: center;
+}
+
+/* ---------- Buttons ---------- */
+button[type="submit"],
+button[type="button"] {
+    display: block;
+    width: 100%;
+    margin: 10px auto 0 auto;
+    padding: 10px 40px;
+    background-color: #303655;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: background-color 0.25s, transform 0.15s;
+}
+
+button[type="submit"]:hover {
+    background-color: #d82323;
+    transform: translateY(-1px);
+}
+
+button[type="button"]:hover {
+    background-color: #2f5494;
+    transform: translateY(-1px);
+}
+
+button[type="submit"]:active {
+    background-color: #1a365d;
+    transform: translateY(0);
+}
+
+.boxes:hover {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    overflow: auto;
+    height: 100%;
+}
+
+/* ---------- Steps ---------- */
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+/* ---------- Responsive — single clean block ---------- */
+@media (max-width: 768px) {
+    .container {
+        padding: 1em;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+
+    img {
+        max-width: 200px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    /* Keep table cells horizontal — do NOT block */
+    td {
+        display: table-cell;
+        width: auto;
+        padding: 6px 4px;
+    }
+
+    td:first-child {
+        white-space: normal;
+        /* allow wrapping */
+        width: auto;
+        /* don't force 220px */
+        min-width: 120px;
+        /* but keep a minimum */
+        font-weight: 600;
+    }
+
+    select {
+        min-width: unset;
+        width: 100%;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Risk table stacks on mobile */
+    .risk-wrapper {
+        flex-direction: column;
+    }
+
+    .risk-left,
+    .risk-right {
+        width: 100%;
+        flex: none;
+    }
+
+    table.risk {
+        font-size: 10px;
+    }
+
+    table.risk th,
+    table.risk td {
+        padding: 4px;
+    }
+
+    button[type="submit"],
+    button[type="button"] {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    fieldset {
+        overflow: visible;
+        padding: 10px 12px;
+    }
+
+    .boxes {
+        overflow: visible;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        max-width: 60px;
+    }
+
+    select {
+        font-size: 13px;
+    }
+
+    table.risk input[type="text"],
+    table.risk input[type="number"] {
+        font-size: 10px;
+        height: 20px;
+        padding: 0 2px;
+    }
+
+    legend {
+        font-size: 0.85em;
+        padding: 3px 8px;
+    }
+}
+
+/* ---------- Extra-small phones ---------- */
+@media (max-width: 480px) {
+    .container {
+        padding: 0.6em;
+    }
+
+    h1 {
+        font-size: 1.1em;
+    }
+
+    table.risk {
+        font-size: 8px;
+    }
+
+    table.risk th,
+    table.risk td {
+        padding: 1px;
+        height: 24px;
+    }
+
+    img {
+        max-width: 300px;
+        /* increase this */
+        margin-bottom: 10px;
+
+    }
+}
+
+/* ── Accordion ───────────────────────────────────────────── */
+.accordion-section {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    width: 100%;
+    text-align: left;
+    background: #303655;
+    color: #fff;
+    border: none;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.accordion-icon {
+    font-size: 20px;
+    width: 18px;
+    display: inline-block;
+    text-align: center;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 18px;
+}
+
+.accordion-section.open .accordion-content {
+    max-height: none;
+    padding: 16px 18px;
+}
+
+.form-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+}
+
+.form-footer button {
+    font-size: 14px;
+    margin: 0 40px;
+}
+
+/* ── Dashboard ───────────────────────────────────────────── */
+.dashboard-container {
+    max-width: 900px;
+}
+
+.dashboard-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 25px 20px;
+    flex: 1 1 250px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard-card h2 {
+    color: #1a365d;
+    margin-bottom: 8px;
+}
+
+.dashboard-card p {
+    color: #555;
+    margin-bottom: 18px;
+    min-height: 40px;
+}
+
+.dashboard-btn {
+    display: inline-block;
+    background: #303655;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    width: 180px;
+    text-align: center;
+    box-sizing: border-box;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+/* Beats the global button[type="button"] rule (display:block; width:100%)
+   so the Export Data <button> matches the View Responses <a> exactly. */
+button.dashboard-btn {
+    display: inline-block;
+    width: 180px;
+}
+
+.dashboard-btn:hover {
+    background: #2f5494;
+}
+
+button.dashboard-btn:hover {
+    background: #2f5494;
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    background: #555;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+/* ── Responses Table ─────────────────────────────────────── */
+.responses-container {
+    max-width: 1200px;
+}
+
+.responses-top-bar {
+    margin-bottom: 20px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+.responses-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.responses-table th,
+.responses-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: left;
+    white-space: nowrap;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.responses-table th {
+    background: #1a365d;
+    color: #fff;
+    position: sticky;
+    top: 0;
+}
+
+.responses-table tr:nth-child(even) {
+    background: #f7f7f7;
+}
+
+/* ── Final override: force identical base + hover colors          ── */
+/* ── for ALL dashboard buttons, regardless of <a> vs <button>.     ── */
+a.dashboard-btn,
+button.dashboard-btn {
+    background-color: #303655 !important;
+}
+
+a.dashboard-btn:hover,
+button.dashboard-btn:hover {
+    background-color: #2f5494 !important;
+}
+
+/* ── Login Page ──────────────────────────────────────────── */
+.login-container {
+    max-width: 420px;
+    text-align: center;
+}
+
+.login-container table {
+    margin-bottom: 10px;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+}
+
+.login-container button[type="submit"] {
+    margin-top: 10px;
+}
+
+/* ── Dashboard Top Bar (welcome + logout) ───────────────────── */
+.dashboard-topbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #4a5568;
+}
+/* ── Login Page ─────────────────────────────────────────── */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('your-bg.jpg') center/cover no-repeat;
+}
+
+.login-card {
+    background: #fff;
+    padding: 36px 32px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.login-header img {
+    height: 70px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.login-hospital-name h2 {
+    font-size: 18px;
+    color: #1a365d;
+    margin-bottom: 4px;
+}
+
+.login-hospital-name p {
+    font-size: 12px;
+    color: #666;
+}
+
+.login-title {
+    text-align: center;
+    color: #1a365d;
+    margin-bottom: 20px;
+    font-size: 22px;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+}
+
+.login-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+#login_error {
+    display: block;
+    color: red;
+    font-size: 13px;
+    margin-bottom: 12px;
+    min-height: 18px;
+}
+/* ── Login page overrides ────────────────────────────────── */
+body.login-page {
+    padding: 0;
+    background-image: url('360_F_1884750335_2qt7bWSriLN399ccQYoPUZAcRFc5gwMd.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+body.login-page .container {
+    all: unset;
+}
+
+body.login-page img {
+    display: block;
+    max-width: 100%;
+    height: 70px;
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+.necessary{
+    color: red;
+    font-size: 25px;
+}
