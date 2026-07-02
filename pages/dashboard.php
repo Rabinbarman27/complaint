@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['employee_id'])) {
-    header('Location: index.html');
+    header('Location: ../index.html');
     exit;
 }
 ?>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['employee_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complaint &amp; Feedback Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <style>
         .logout {
             display: inline-block;
@@ -42,7 +42,7 @@ if (!isset($_SESSION['employee_id'])) {
 
 <body>
     <div class="container dashboard-container">
-        <img src="BBH-logo-1-1B.png" alt="" srcset="">
+        <img src="../BBH-logo-1-1B.png" alt="" srcset="">
         <h1>Complaint and Feedback Dashboard</h1>
 
         <div class="dashboard-grid">
@@ -87,9 +87,9 @@ if (!isset($_SESSION['employee_id'])) {
             <button type="button" onclick="closeExportModal()">Cancel</button>
         </div>
     </div>
-    
-    <script src="auth-guard.js"></script>
-    <script src="dashboard.js"></script>
+
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/dashboard.js"></script>
 
 </body>
 

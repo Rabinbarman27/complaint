@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['employee_id'])) {
-    header('Location: index.html');
+    header('Location: ../index.html');
     exit;
 }
 ?>
@@ -12,12 +12,12 @@ if (!isset($_SESSION['employee_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Responses</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
     <div class="container responses-container">
-        <img src="BBH-logo-1-1B.png" alt="" srcset="">
+        <img src="../BBH-logo-1-1B.png" alt="" srcset="">
         <h1>Submitted Responses</h1>
 
         <div class="responses-top-bar">
@@ -50,8 +50,8 @@ if (!isset($_SESSION['employee_id'])) {
         </div>
     </div>
 
-    <script src="auth-guard.js"></script>
-    <script src="responses.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/responses.js"></script>
 </body>
 
 </html>

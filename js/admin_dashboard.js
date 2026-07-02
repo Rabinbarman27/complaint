@@ -1,27 +1,27 @@
 // ── Auth guard ───────────────────────────────────────────
 (function () {
     document.documentElement.style.visibility = 'hidden';
-    fetch('admin_check_session.php')
+    fetch('../admin/admin_check_session.php')
         .then(res => res.json())
         .then(result => {
             if (!result.loggedIn) {
-                window.location.href = 'admin_login.html';
+                window.location.href = '../admin_login.html';
             } else {
                 document.documentElement.style.visibility = 'visible';
                 const el = document.getElementById('admin_welcome');
                 if (el) el.textContent = 'Logged in as: ' + result.admin_id;
             }
         })
-        .catch(() => { window.location.href = 'admin_login.html'; });
+        .catch(() => { window.location.href = '../admin_login.html'; });
 })();
 
 // ── Logout ───────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('admin_logout').addEventListener('click', function (e) {
         e.preventDefault();
-        fetch('admin_logout.php')
-            .then(() => { window.location.href = 'admin_login.html'; })
-            .catch(() => { window.location.href = 'admin_login.html'; });
+        fetch('../admin/admin_logout.php')
+            .then(() => { window.location.href = '../admin_login.html'; })
+            .catch(() => { window.location.href = '../admin_login.html'; });
     });
 
     loadEmployees();
@@ -55,9 +55,9 @@ function showStatus(elId, message, type) {
 
 // ── Employees ────────────────────────────────────────────
 function loadEmployees() {
-    fetch('admin_get_employees.php')
+    fetch('../admin/admin_get_employees.php')
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {
@@ -77,7 +77,7 @@ function loadEmployees() {
                     <td>${escapeHtml(emp.employee_id)}</td>
                     <td>
                         <button class="btn-delete" data-empid="${escapeHtml(emp.employee_id)}" onclick="deleteEmployee(this.dataset.empid)">✖️</button>
-                        <button class="btn-edit" style=" margin-top: 10px; font-size:14px ;"data-empid="${escapeHtml(emp.employee_id)}" onclick="openResetModal(this.dataset.empid)">  🔒  </button>
+                        <button class="btn-edit" style="margin-top:10px; font-size:14px;" data-empid="${escapeHtml(emp.employee_id)}" onclick="openResetModal(this.dataset.empid)">🔒</button>
                     </td>
                 </tr>
             `).join('');
@@ -103,9 +103,9 @@ function addEmployee() {
     formData.append('employee_id', empId);
     formData.append('password', empPass);
 
-    fetch('admin_add_employee.php', { method: 'POST', body: formData })
+    fetch('../admin/admin_add_employee.php', { method: 'POST', body: formData })
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {
@@ -116,7 +116,7 @@ function addEmployee() {
                 document.getElementById('new_emp_id').value = '';
                 document.getElementById('new_emp_pass').value = '';
                 document.getElementById('new_emp_pass').type = 'password';
-                document.getElementById('eye_icon').src = 'icons8-eye-50.png';
+                document.getElementById('eye_icon').src = '../icons8-eye-50.png';
                 loadEmployees();
             } else {
                 statusEl.style.color = 'red';
@@ -136,9 +136,9 @@ function deleteEmployee(employeeId) {
     const formData = new FormData();
     formData.append('employee_id', employeeId);
 
-    fetch('admin_delete_employee.php', { method: 'POST', body: formData })
+    fetch('../admin/admin_delete_employee.php', { method: 'POST', body: formData })
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {
@@ -158,9 +158,9 @@ function deleteEmployee(employeeId) {
 
 // ── Submissions ──────────────────────────────────────────
 function loadSubmissions() {
-    fetch('admin_get_submissions.php')
+    fetch('../admin/admin_get_submissions.php')
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {
@@ -176,7 +176,7 @@ function loadSubmissions() {
             }
             tbody.innerHTML = result.data.map(row => `
                 <tr data-id="${escapeHtml(row.id)}">
-                <td>
+                    <td>
                         <button class="btn-edit" onclick="toggleEditRow(this)" title="Edit row">✏️</button>
                     </td>
                     <td>
@@ -185,8 +185,8 @@ function loadSubmissions() {
                     <td>${escapeHtml(row.id)}</td>
                     <td>${escapeHtml(row.submitted_by)}</td>
                     <td>${escapeHtml(row.form_no)}</td>
-                    <td >${escapeHtml(row.operation)}</td>
-                    <td >${escapeHtml(row.given_by)}</td>
+                    <td>${escapeHtml(row.operation)}</td>
+                    <td>${escapeHtml(row.given_by)}</td>
                     <td>${escapeHtml(row.date_of_submission)}</td>
                     <td class="editable" data-field="depatment_section">${escapeHtml(row.depatment_section)}</td>
                     <td class="editable" data-field="incident_description">${escapeHtml(row.incident_description)}</td>
@@ -196,7 +196,6 @@ function loadSubmissions() {
                     <td class="editable" data-field="corrective_action">${escapeHtml(row.corrective_action)}</td>
                     <td class="editable" data-field="preventive_action">${escapeHtml(row.preventive_action)}</td>
                     <td class="editable" data-field="patient_consequences">${escapeHtml(row.patient_consequences)}</td>
-                    
                 </tr>
             `).join('');
         })
@@ -212,9 +211,9 @@ function saveEdit(id, field, value, td, original) {
     formData.append('field', field);
     formData.append('value', value);
 
-    fetch('admin_edit_submission.php', { method: 'POST', body: formData })
+    fetch('../admin/admin_edit_submission.php', { method: 'POST', body: formData })
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {
@@ -240,9 +239,9 @@ function deleteSubmission(id) {
     const formData = new FormData();
     formData.append('id', id);
 
-    fetch('admin_delete_submission.php', { method: 'POST', body: formData })
+    fetch('../admin/admin_delete_submission.php', { method: 'POST', body: formData })
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {
@@ -259,6 +258,8 @@ function deleteSubmission(id) {
             showStatus('sub_status', 'Network error.', 'error');
         });
 }
+
+// ── Export ───────────────────────────────────────────────
 function openExportModal() {
     document.getElementById('exportModal').style.display = 'block';
 }
@@ -282,36 +283,38 @@ function exportData() {
     }
 
     if (format === 'excel') {
-        window.location.href = `export_excel.php?from_date=${from}&to_date=${to}`;
+        window.location.href = `../api/export_excel.php?from_date=${from}&to_date=${to}`;
     } else if (format === 'csv') {
-        window.location.href = `export_csv.php?from_date=${from}&to_date=${to}`;
+        window.location.href = `../api/export_csv.php?from_date=${from}&to_date=${to}`;
     } else if (format === 'pdf') {
-        window.location.href = `export_pdf.php?from_date=${from}&to_date=${to}`;
+        window.location.href = `../api/export_pdf.php?from_date=${from}&to_date=${to}`;
     }
-
-    closeExportModal();
 }
 
 window.onclick = function (e) {
     const modal = document.getElementById('exportModal');
     if (e.target === modal) closeExportModal();
 }
+
+// ── Eye toggle ───────────────────────────────────────────
 function toggleEmpPass() {
     const input = document.getElementById('new_emp_pass');
     const icon = document.getElementById('eye_icon');
     if (input.type === 'password') {
         input.type = 'text';
-        icon.src = 'icons8-closed-eye-50.png';
+        icon.src = '../icons8-closed-eye-50.png';
     } else {
         input.type = 'password';
-        icon.src = 'icons8-eye-50.png';
+        icon.src = '../icons8-eye-50.png';
     }
-} function toggleEditRow(btn) {
+}
+
+// ── Inline row editing ───────────────────────────────────
+function toggleEditRow(btn) {
     const row = btn.closest('tr');
     const isEditing = row.classList.contains('editing');
 
     if (isEditing) {
-        // Save all inputs and exit edit mode
         row.querySelectorAll('td.editable input').forEach(input => {
             const td = input.parentElement;
             const field = td.dataset.field;
@@ -327,7 +330,6 @@ function toggleEmpPass() {
         btn.textContent = '✏️';
         btn.title = 'Edit row';
     } else {
-        // Enter edit modeF
         row.querySelectorAll('td.editable').forEach(td => {
             const current = td.textContent;
             td.innerHTML = `<input type="text" value="${escapeHtml(current)}" data-original="${escapeHtml(current)}">`;
@@ -337,6 +339,8 @@ function toggleEmpPass() {
         btn.title = 'Save changes';
     }
 }
+
+// ── Reset Password ───────────────────────────────────────
 let resetTargetId = '';
 
 function openResetModal(employeeId) {
@@ -376,9 +380,9 @@ function submitResetPassword() {
     formData.append('employee_id', resetTargetId);
     formData.append('new_password', newPass);
 
-    fetch('admin_reset_password.php', { method: 'POST', body: formData })
+    fetch('../admin/admin_reset_password.php', { method: 'POST', body: formData })
         .then(res => {
-            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            if (res.status === 401) { window.location.href = '../admin_login.html'; return; }
             return res.json();
         })
         .then(result => {

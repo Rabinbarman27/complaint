@@ -3,7 +3,9 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
-include 'connection.php';
+
+include '../connection.php';
+
 header('Content-Type: application/json');
 
 $employee_id = trim($_POST["employee_id"] ?? "");

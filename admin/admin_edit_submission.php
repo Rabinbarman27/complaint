@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit;
 }
-include 'connection.php';
+include '../connection.php';
 header('Content-Type: application/json');
 
 $id    = trim($_POST['id'] ?? '');

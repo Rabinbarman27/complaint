@@ -9,7 +9,7 @@ if (!isset($_SESSION['employee_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit;
 }
-include 'connection.php';
+include '../connection.php';
 header('Content-Type: application/json');
 
 $sql = "SELECT id, form_no, submitted_by, Operation, Given_by, Date_of_submission, Depatment_section,

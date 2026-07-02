@@ -2,11 +2,11 @@
     // Hide page immediately until session confirmed
     document.documentElement.style.visibility = 'hidden';
 
-    fetch('check_session.php')
+    fetch('../api/check_session.php')
         .then(res => res.json())
         .then(result => {
             if (!result.loggedIn) {
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
             } else {
                 document.documentElement.style.visibility = 'visible';
                 const welcomeEl = document.getElementById('welcome_user');
@@ -17,7 +17,7 @@
         })
         .catch(err => {
             console.error('Session check failed:', err);
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         });
 })();
 
@@ -26,26 +26,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if (logoutLink) {
         logoutLink.addEventListener('click', function (e) {
             e.preventDefault();
-            fetch('logout.php')
+            fetch('../api/logoutdashboardemployee.php')
                 .then(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = '../index.html';
                 })
                 .catch(err => console.error('Logout failed:', err));
         });
     }
 });
+
 window.addEventListener('pageshow', function (e) {
     if (e.persisted) {
-        // Page loaded from cache (back button) — recheck session
-        fetch('check_session.php')
+        fetch('../api/check_session.php')
             .then(res => res.json())
             .then(result => {
                 if (!result.loggedIn) {
-                    window.location.href = 'index.html';
+                    window.location.href = '../index.html';
                 } else {
                     document.documentElement.style.visibility = 'visible';
                 }
             })
-            .catch(() => { window.location.href = 'index.html'; });
+            .catch(() => { window.location.href = '../index.html'; });
     }
 });

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-    header('Location: admin_login.html');
+    header('Location: ../admin_login.html');
     exit;
 }
 ?>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['admin_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard — Complaint & Feedback System</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <style>
         .btn-edit {
             background: #2b6cb0;
@@ -22,7 +22,6 @@ if (!isset($_SESSION['admin_id'])) {
             padding: 5px 12px;
             font-size: 12px;
             cursor: pointer;
-
         }
 
         .btn-edit:hover {
@@ -187,7 +186,6 @@ if (!isset($_SESSION['admin_id'])) {
             white-space: normal;
             word-break: break-word;
             min-width: 60px;
-
         }
 
         table.admin-table th:last-child,
@@ -218,8 +216,6 @@ if (!isset($_SESSION['admin_id'])) {
             color: #fff;
             padding: 10px 12px;
             text-align: left;
-            white-space: nowrap;
-
         }
 
         table.admin-table td {
@@ -346,7 +342,7 @@ if (!isset($_SESSION['admin_id'])) {
 <body>
     <div class="admin-header">
         <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
-            <img src="BBH-logo-1-1B.png" alt="BBH Logo">
+            <img src="../BBH-logo-1-1B.png" alt="BBH Logo">
             <h1 style="font-size:16px; color:#fff; margin:0;">Admin Dashboard</h1>
         </div>
         <div class="admin-info">
@@ -373,7 +369,7 @@ if (!isset($_SESSION['admin_id'])) {
                             style="width:100%; padding-right:36px;">
                         <span onclick="toggleEmpPass()"
                             style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
-                            <img id="eye_icon" src="icons8-eye-50.png" style="width:18px; height:18px;" class="eye-img">
+                            <img id="eye_icon" src="../icons8-eye-50.png" style="width:18px; height:18px;" class="eye-img">
                         </span>
                     </div>
                     <button onclick="addEmployee()">Add Employee</button>
@@ -483,7 +479,8 @@ if (!isset($_SESSION['admin_id'])) {
             <button type="button" onclick="closeExportModal()">Cancel</button>
         </div>
     </div>
-    <script src="admin_dashboard.js"></script>
+
+    <script src="../js/admin_dashboard.js"></script>
 </body>
 
 </html>

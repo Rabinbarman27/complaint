@@ -7,7 +7,7 @@ if (!isset($_SESSION['employee_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit;
 }
-include 'connection.php';
+include '../connection.php';
 header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 0);

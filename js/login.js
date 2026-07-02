@@ -18,14 +18,14 @@ function handleLogin() {
     formData.append('employee_id', employeeId);
     formData.append('password', password);
 
-    fetch('login.php', {
+    fetch('api/login.php', {
         method: 'POST',
         body: formData
     })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                window.location.href = 'dashboard.php';
+                window.location.href = 'pages/dashboard.php';
             } else {
                 errorEl.textContent = data.error || "Invalid Employee ID or Password.";
                 loginBtn.disabled = false;
@@ -42,7 +42,6 @@ function handleLogin() {
     return false;
 }
 
-// Allow pressing Enter in either field to submit
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('pageshow', function () {
         const btn = document.getElementById('login_btn');
@@ -59,13 +58,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 function toggleEmpPass() {
     const input = document.getElementById('password');
     const icon = document.getElementById('eye_icon');
 
     if (input.type === 'password') {
         input.type = 'text';
-        icon.src = 'icons8-closed-eye-50.png'; // ← fixed
+        icon.src = 'icons8-closed-eye-50.png';
     } else {
         input.type = 'password';
         icon.src = 'icons8-eye-50.png';

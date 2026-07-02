@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const table = document.getElementById('responses_table');
     const tbody = document.getElementById('responses_body');
 
-    fetch('view_responses.php')
+    fetch('../api/view_responses.php')
         .then(res => {
             if (res.status === 401) {
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
                 return;
             }
             return res.json();
         })
         .then(result => {
-            if (!result) return; // redirect already happened
+            if (!result) return;
 
             if (!result.success) {
                 statusEl.textContent = result.error || 'Could not load responses.';

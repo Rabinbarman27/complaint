@@ -22,14 +22,12 @@ function exportData() {
     }
 
     if (format === 'excel') {
-        window.location.href = `export_excel.php?from_date=${from}&to_date=${to}`;
+        window.location.href = `../api/export_excel.php?from_date=${from}&to_date=${to}`;
     } else if (format === 'csv') {
-        window.location.href = `export_csv.php?from_date=${from}&to_date=${to}`;
+        window.location.href = `../api/export_csv.php?from_date=${from}&to_date=${to}`;
     } else if (format === 'pdf') {
-        window.location.href = `export_pdf.php?from_date=${from}&to_date=${to}`;
+        window.location.href = `../api/export_pdf.php?from_date=${from}&to_date=${to}`;
     }
-
-    closeExportModal();
 }
 
 // Close modal if user clicks outside it
@@ -37,12 +35,13 @@ window.onclick = function (e) {
     const modal = document.getElementById('exportModal');
     if (e.target === modal) closeExportModal();
 }
+
 function handleLogout() {
-    fetch('logoutdashboardemployee.php', { method: 'POST' })
+    fetch('../api/logoutdashboardemployee.php', { method: 'POST' })
         .then(() => {
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         })
         .catch(() => {
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         });
 }

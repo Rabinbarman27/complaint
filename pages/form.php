@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['employee_id'])) {
-    header('Location: index.html');
+    header('Location: ../index.html');
     exit;
 }
 ?>
@@ -12,12 +12,12 @@ if (!isset($_SESSION['employee_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complaint and Feedback</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
     <div class="container">
-        <img src="BBH-logo-1-1B.png" alt="" srcset="">
+        <img src="../BBH-logo-1-1B.png" alt="" srcset="">
         <h1>Complaint and Feedback Form</h1>
 
         <form onsubmit="return validateform()">
@@ -164,20 +164,15 @@ if (!isset($_SESSION['employee_id'])) {
                                 <td>
                                     <select name="pre_analytic_error" id="pre_analytic_error">
                                         <option value="">-- Please select --</option>
-                                        <option value="Wrong id of patient / wrong sample">Wrong id of patient / wrong
-                                            sample</option>
+                                        <option value="Wrong id of patient / wrong sample">Wrong id of patient / wrong sample</option>
                                         <option value="Wrong label at collection">Wrong label at collection</option>
                                         <option value="Wrong label at reception">Wrong label at reception</option>
                                         <option value="Wrong order / wrong test">Wrong order / wrong test</option>
-                                        <option value="Wrong container / container related">Wrong container / container
-                                            related</option>
+                                        <option value="Wrong container / container related">Wrong container / container related</option>
                                         <option value="Staffing / waiting">Staffing / waiting</option>
-                                        <option value="MIS related / demographics wrong">MIS related / demographics
-                                            wrong
-                                        </option>
+                                        <option value="MIS related / demographics wrong">MIS related / demographics wrong</option>
                                         <option value="Sample missing">Sample missing</option>
-                                        <option value="Test not done / sample not collected">Test not done / sample not
-                                            collected</option>
+                                        <option value="Test not done / sample not collected">Test not done / sample not collected</option>
                                         <option value="OP sample haemolysed">OP sample haemolysed</option>
                                         <option value="Other in collection">Other in collection</option>
                                         <option value="No label / wrong labels">No label / wrong labels</option>
@@ -189,8 +184,7 @@ if (!isset($_SESSION['employee_id'])) {
                                 </td>
                             </tr>
                             <tr id="analytic_row" style="display:none;" class="blocks">
-                                <td><label for="analytic_error">Analytic Errors:</label><label
-                                        class="necessary">*</label></td>
+                                <td><label for="analytic_error">Analytic Errors:</label><label class="necessary">*</label></td>
                                 <td>
                                     <select name="analytic_error" id="analytic_error">
                                         <option value="">-- Please select --</option>
@@ -203,15 +197,12 @@ if (!isset($_SESSION['employee_id'])) {
                                 </td>
                             </tr>
                             <tr id="post_row" style="display:none;" class="blocks">
-                                <td><label for="post_analytic_error">Post-Analytic Errors:</label><label
-                                        class="necessary">*</label></td>
+                                <td><label for="post_analytic_error">Post-Analytic Errors:</label><label class="necessary">*</label></td>
                                 <td>
                                     <select name="post_analytic_error" id="post_analytic_error">
                                         <option value="">-- Please select --</option>
                                         <option value="Transcription error">Transcription error</option>
-                                        <option value="Reference range / units / report format">Reference range / units
-                                            /
-                                            report format</option>
+                                        <option value="Reference range / units / report format">Reference range / units / report format</option>
                                         <option value="Turn around time delay">Turn around time delay</option>
                                         <option value="Other">Other</option>
                                         <option value="Wrong report">Wrong report</option>
@@ -219,25 +210,18 @@ if (!isset($_SESSION['employee_id'])) {
                                 </td>
                             </tr>
                             <tr id="others_row" style="display:none;" class="blocks">
-                                <td><label for="no_lab_error">Clinically Not Correlating / No Lab Error /
-                                        Others:</label><label class="necessary">*</label>
-                                </td>
+                                <td><label for="no_lab_error">Clinically Not Correlating / No Lab Error / Others:</label><label class="necessary">*</label></td>
                                 <td>
                                     <select name="no_lab_error" id="no_lab_error">
                                         <option value="">-- Please select --</option>
                                         <option value="Clinically not correlating">Clinically not correlating</option>
                                         <option value="No lab error">No lab error</option>
                                         <option value="Professionalism / Courtesy">Professionalism / Courtesy</option>
-                                        <option value="Machine / Instrument related">Machine / Instrument related
-                                        </option>
-                                        <option value="Availability of reagents / stock">Availability of reagents /
-                                            stock
-                                        </option>
+                                        <option value="Machine / Instrument related">Machine / Instrument related</option>
+                                        <option value="Availability of reagents / stock">Availability of reagents / stock</option>
                                         <option value="Records">Records</option>
                                         <option value="Improvement">Improvement</option>
-                                        <option value="IT related error (Hardware / Software)">IT related error
-                                            (Hardware /
-                                            Software)</option>
+                                        <option value="IT related error (Hardware / Software)">IT related error (Hardware / Software)</option>
                                     </select>
                                 </td>
                             </tr>
@@ -279,8 +263,7 @@ if (!isset($_SESSION['employee_id'])) {
                             <tr class="blocks">
                                 <td>
                                     <input type="checkbox" name="non_cognitive_error" id="non_cognitive_error">
-                                    <label for="non_cognitive_error">Non-Cognitive Error (slip / unconscious
-                                        lapse)</label>
+                                    <label for="non_cognitive_error">Non-Cognitive Error (slip / unconscious lapse)</label>
                                 </td>
                             </tr>
                             <tr class="blocks">
@@ -318,48 +301,33 @@ if (!isset($_SESSION['employee_id'])) {
                                         <th>Risk Score</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="Risk_discription1" placeholder="Describe the risk">
-                                        </td>
-                                        <td><input type="number" name="impact_score1" id="impact_score1" min="0"
-                                                max="5"></td>
-                                        <td><input type="number" name="freq_score1" id="freq_score1" min="0" max="5">
-                                        </td>
+                                        <td><input type="text" name="Risk_discription1" placeholder="Describe the risk"></td>
+                                        <td><input type="number" name="impact_score1" id="impact_score1" min="0" max="5"></td>
+                                        <td><input type="number" name="freq_score1" id="freq_score1" min="0" max="5"></td>
                                         <td><span id="risk_score1"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="Risk_discription2" placeholder="Describe the risk">
-                                        </td>
-                                        <td><input type="number" name="impact_score2" id="impact_score2" min="0"
-                                                max="5"></td>
-                                        <td><input type="number" name="freq_score2" id="freq_score2" min="0" max="5">
-                                        </td>
+                                        <td><input type="text" name="Risk_discription2" placeholder="Describe the risk"></td>
+                                        <td><input type="number" name="impact_score2" id="impact_score2" min="0" max="5"></td>
+                                        <td><input type="number" name="freq_score2" id="freq_score2" min="0" max="5"></td>
                                         <td><span id="risk_score2"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="Risk_discription3" placeholder="Describe the risk">
-                                        </td>
-                                        <td><input type="number" name="impact_score3" id="impact_score3" min="0"
-                                                max="5"></td>
-                                        <td><input type="number" name="freq_score3" id="freq_score3" min="0" max="5">
-                                        </td>
+                                        <td><input type="text" name="Risk_discription3" placeholder="Describe the risk"></td>
+                                        <td><input type="number" name="impact_score3" id="impact_score3" min="0" max="5"></td>
+                                        <td><input type="number" name="freq_score3" id="freq_score3" min="0" max="5"></td>
                                         <td><span id="risk_score3"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="Risk_discription4" placeholder="Describe the risk">
-                                        </td>
-                                        <td><input type="number" name="impact_score4" id="impact_score4" min="0"
-                                                max="5"></td>
-                                        <td><input type="number" name="freq_score4" id="freq_score4" min="0" max="5">
-                                        </td>
+                                        <td><input type="text" name="Risk_discription4" placeholder="Describe the risk"></td>
+                                        <td><input type="number" name="impact_score4" id="impact_score4" min="0" max="5"></td>
+                                        <td><input type="number" name="freq_score4" id="freq_score4" min="0" max="5"></td>
                                         <td><span id="risk_score4"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="Risk_discription5" placeholder="Describe the risk">
-                                        </td>
-                                        <td><input type="number" name="impact_score5" id="impact_score5" min="0"
-                                                max="5"></td>
-                                        <td><input type="number" name="freq_score5" id="freq_score5" min="0" max="5">
-                                        </td>
+                                        <td><input type="text" name="Risk_discription5" placeholder="Describe the risk"></td>
+                                        <td><input type="number" name="impact_score5" id="impact_score5" min="0" max="5"></td>
+                                        <td><input type="number" name="freq_score5" id="freq_score5" min="0" max="5"></td>
                                         <td><span id="risk_score5"></span></td>
                                     </tr>
                                 </table>
@@ -368,13 +336,11 @@ if (!isset($_SESSION['employee_id'])) {
                                 <table>
                                     <tr class="blocks">
                                         <td><label for="impact_score">Average Impact Score (0–5):</label></td>
-                                        <td><input type="number" name="impact_score" id="impact_score" min="0" max="5"
-                                                readonly></td>
+                                        <td><input type="number" name="impact_score" id="impact_score" min="0" max="5" readonly></td>
                                     </tr>
                                     <tr class="blocks">
                                         <td><label for="freq_score">Average Frequency Score (0–5):</label></td>
-                                        <td><input type="number" name="freq_score" id="freq_score" min="0" max="5"
-                                                readonly></td>
+                                        <td><input type="number" name="freq_score" id="freq_score" min="0" max="5" readonly></td>
                                     </tr>
                                     <tr class="blocks">
                                         <td><label for="risk_score">Average Risk Score:</label></td>
@@ -403,8 +369,7 @@ if (!isset($_SESSION['employee_id'])) {
                     <fieldset class="boxes">
                         <table>
                             <tr class="blocks">
-                                <td><label for="immediate_correction">Immediate Correction:</label><label
-                                        class="necessary">*</label><label></label></td>
+                                <td><label for="immediate_correction">Immediate Correction:</label><label class="necessary">*</label></td>
                             </tr>
                             <tr class="blocks">
                                 <td colspan="2">
@@ -416,8 +381,7 @@ if (!isset($_SESSION['employee_id'])) {
                                 <td colspan="2"><span id="immediate_correction_empty" style="color:red;"></span></td>
                             </tr>
                             <tr class="blocks">
-                                <td><label for="corrective_action">Corrective Action:</label><label
-                                        class="necessary">*</label><label></label></td>
+                                <td><label for="corrective_action">Corrective Action:</label><label class="necessary">*</label></td>
                             </tr>
                             <tr class="blocks">
                                 <td colspan="2">
@@ -459,7 +423,7 @@ if (!isset($_SESSION['employee_id'])) {
                 </div>
             </div>
 
-            <!-- SUBMIT (Export Data now lives on the dashboard) -->
+            <!-- SUBMIT -->
             <div class="form-footer">
                 <button type="submit">Submit</button>
                 <a href="dashboard.php" class="btn-link">Back to Dashboard</a>
@@ -468,8 +432,8 @@ if (!isset($_SESSION['employee_id'])) {
         </form>
     </div>
 
-    <script src="auth-guard.js"></script>
-    <script src="form.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/form.js"></script>
 
 </body>
 

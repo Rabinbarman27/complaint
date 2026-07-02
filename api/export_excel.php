@@ -5,7 +5,7 @@ if (!isset($_SESSION['employee_id']) && !isset($_SESSION['admin_id'])) {
     http_response_code(401);
     die("Unauthorized. Please log in.");
 }
-include 'connection.php';
+include '../connection.php';
 
 $from = trim($_GET['from_date'] ?? '');
 $to   = trim($_GET['to_date'] ?? '');

@@ -5,7 +5,6 @@ function toggleSection(index) {
         const isTarget = i === index;
         const alreadyOpen = section.classList.contains("open");
         if (isTarget) {
-            // Toggle the clicked one; opening it closes all others
             section.classList.toggle("open", !alreadyOpen);
         } else {
             section.classList.remove("open");
@@ -22,7 +21,6 @@ function openSection(index) {
         const icon = section.querySelector(".accordion-icon");
         if (icon) icon.textContent = section.classList.contains("open") ? "−" : "+";
     });
-    // Scroll the opened section into view
     sections[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -84,7 +82,7 @@ function calcAverage() {
 
 // ── Form number with prefix ──────────────────────────────
 function updateFormNumber() {
-    fetch('get_form_number.php')
+    fetch('../api/get_form_number.php')
         .then(res => res.text())
         .then(number => {
             const el = document.getElementById('formno');
@@ -118,7 +116,6 @@ function validateform() {
     const immediate_correction = document.getElementById("immediate_correction").value;
     const corrective_action = document.getElementById("corrective_action").value;
 
-    // Check whether at least one risk row has both impact and freq filled
     let anyRiskRowFilled = false;
     for (let i = 1; i <= 5; i++) {
         const impact = document.getElementById('impact_score' + i).value;
@@ -141,16 +138,14 @@ function validateform() {
 
     let valid = true;
     let missingFields = [];
-    let firstErrorSection = null; // accordion section index (0-5)
+    let firstErrorSection = null;
 
-    // Clear all errors
     [operation_empty, given_by_empty, department_section_empty,
         incident_description_empty, main_category_empty, root_cause_empty,
         immediate_correction_empty, corrective_action_empty,
         risk_score_evaluation
     ].forEach(el => { if (el) el.textContent = ""; });
 
-    // Section 0 — Basic Information
     if (operation.length === 0) {
         operation_empty.textContent = "Choose an operation!";
         missingFields.push("Operation");
@@ -163,8 +158,6 @@ function validateform() {
         valid = false;
         if (firstErrorSection === null) firstErrorSection = 0;
     }
-
-    // Section 1 — Incident Details
     if (!department_section) {
         department_section_empty.textContent = "Choose an option!";
         missingFields.push("Department/Section");
@@ -177,32 +170,24 @@ function validateform() {
         valid = false;
         if (firstErrorSection === null) firstErrorSection = 1;
     }
-
-    // Section 2 — Error Classification
     if (!main_category) {
         main_category_empty.textContent = "Choose an option!";
         missingFields.push("Error Category");
         valid = false;
         if (firstErrorSection === null) firstErrorSection = 2;
     }
-
-    // Section 3 — Error Analysis
     if (!root_cause.trim()) {
         root_cause_empty.textContent = "Cannot be left empty!";
         missingFields.push("Root Cause");
         valid = false;
         if (firstErrorSection === null) firstErrorSection = 3;
     }
-
-    // Section 4 — Risk Score
     if (!anyRiskRowFilled) {
         risk_score_evaluation.textContent = "Fill at least one risk row!";
         missingFields.push("Risk Score (at least one row)");
         valid = false;
         if (firstErrorSection === null) firstErrorSection = 4;
     }
-
-    // Section 5 — Actions Taken
     if (!immediate_correction.trim()) {
         immediate_correction_empty.textContent = "Cannot be left empty!";
         missingFields.push("Immediate Correction");
@@ -216,21 +201,19 @@ function validateform() {
         if (firstErrorSection === null) firstErrorSection = 5;
     }
 
-    // If invalid — show alert and open the section with the first error
     if (!valid) {
         alert("Please fill the following required fields:\n\n• " + missingFields.join("\n• "));
         openSection(firstErrorSection);
         return false;
     }
 
-    // Valid — disable button, then submit via fetch
     const submitBtn = document.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.textContent = "Submitting...";
 
     const formData = new FormData(document.querySelector('form'));
 
-    fetch('submit.php', {
+    fetch('../api/submit.php', {
         method: 'POST',
         body: formData
     })
@@ -238,13 +221,12 @@ function validateform() {
             return res.text().then(text => ({ status: res.status, ok: res.ok, text }));
         })
         .then(({ status, ok, text }) => {
-
             let data;
             try {
                 data = JSON.parse(text);
             } catch (parseErr) {
                 console.error('Could not parse JSON:', parseErr);
-                alert('Server returned an unexpected response (check console for details).');
+                alert('Server returned an unexpected response.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Submit";
                 return;
@@ -253,8 +235,8 @@ function validateform() {
             if (data.success) {
                 alert('Form submitted successfully!');
                 document.querySelector('form').reset();
-                openSection(0);
                 updateSub();
+                openSection(0);
                 updateFormNumber();
             } else {
                 alert('Error: ' + data.error);
@@ -299,20 +281,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Load form number on page load
     updateFormNumber();
 
-    // Update form number prefix when operation changes
     document.querySelectorAll('input[name="operation"]').forEach(cb => {
         cb.addEventListener('change', updateFormNumber);
     });
+
+    // Show submitted by
+    fetch('../api/check_session.php')
+        .then(res => res.json())
+        .then(result => {
+            const el = document.getElementById('submitted_by_display');
+            if (el && result.employee_id) {
+                el.textContent = result.employee_id;
+            }
+        });
 });
-// Show submitted by
-fetch('check_session.php')
-    .then(res => res.json())
-    .then(result => {
-        const el = document.getElementById('submitted_by_display');
-        if (el && result.employee_id) {
-            el.textContent = result.employee_id;
-        }
-    });

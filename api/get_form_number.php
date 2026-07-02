@@ -8,7 +8,7 @@ if (!isset($_SESSION['employee_id']) && !isset($_SESSION['admin_id'])) {
     exit;
 }
 
-include 'connection.php';
+include '../connection.php';
 
 $result = pg_query($conn, "SELECT last_value + 1 AS next_id FROM feedback_complaint_data_id_seq");
 
