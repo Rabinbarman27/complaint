@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${escapeHtml(row.form_no)}</td>
+                    <td>${escapeHtml(row.submitted_by)}</td>
                     <td>${escapeHtml(row.operation)}</td>
                     <td>${escapeHtml(row.given_by)}</td>
                     <td>${escapeHtml(row.date_of_submission)}</td>

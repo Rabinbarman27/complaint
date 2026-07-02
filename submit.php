@@ -12,7 +12,10 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-// ---- Collect POST data (no pg_escape_string needed with parameterized queries) ----
+// ---- Get submitted_by from session ----
+$submitted_by = $_SESSION['employee_id'];
+
+// ---- Collect POST data ----
 $Operation            = trim($_POST["operation"] ?? "");
 $form_no              = trim($_POST["form_no"] ?? "");
 $Given_by             = trim($_POST["given_by"] ?? "");
@@ -164,7 +167,8 @@ $sql = "INSERT INTO feedback_complaint_data
          Risk_discription2, impact_score2, freq_score2,
          Risk_discription3, impact_score3, freq_score3,
          Risk_discription4, impact_score4, freq_score4,
-         Risk_discription5, impact_score5, freq_score5)
+         Risk_discription5, impact_score5, freq_score5,
+         submitted_by)
         VALUES
         ($1,$2,$3,$4,$5,
          $6,$7,$8,
@@ -175,7 +179,8 @@ $sql = "INSERT INTO feedback_complaint_data
          $24,$25,$26,
          $27,$28,$29,
          $30,$31,$32,
-         $33,$34,$35)";
+         $33,$34,$35,
+         $36)";
 
 $params = [
     $form_no,
@@ -213,6 +218,7 @@ $params = [
     $Risk_discription5,
     toNullable($impact_score5),
     toNullable($freq_score5),
+    $submitted_by,  // $36
 ];
 
 $result = pg_query_params($conn, $sql, $params);

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +12,10 @@
             color: #fff;
             border: none;
             border-radius: 4px;
-            padding: 5px 10px;
-            font-size: 14px;
+            padding: 5px 12px;
+            font-size: 12px;
             cursor: pointer;
+
         }
 
         .btn-edit:hover {
@@ -59,7 +59,6 @@
             font-size: 16px;
             padding-left: 0px;
             color: #fff;
-
         }
 
         body {
@@ -74,8 +73,6 @@
             justify-content: space-between;
             align-items: center;
         }
-
-
 
         .admin-header .admin-info {
             font-size: 13px;
@@ -124,7 +121,6 @@
             display: block;
         }
 
-        /* Cards */
         .admin-card {
             background: #fff;
             border-radius: 8px;
@@ -141,7 +137,6 @@
             padding-bottom: 10px;
         }
 
-        /* Add Employee Form */
         .add-emp-form {
             display: flex;
             gap: 12px;
@@ -181,7 +176,26 @@
             min-height: 18px;
         }
 
-        /* Tables */
+        table.admin-table th {
+            white-space: normal;
+            word-break: break-word;
+            min-width: 60px;
+
+        }
+
+        table.admin-table th:last-child,
+        table.admin-table td:last-child {
+            width: 100px;
+            min-width: 80px;
+            max-width: 100px;
+            text-align: left;
+        }
+
+        table.admin-table thead tr {
+            height: 48px;
+            vertical-align: middle;
+        }
+
         .admin-table-wrap {
             overflow-x: auto;
         }
@@ -198,6 +212,7 @@
             padding: 10px 12px;
             text-align: left;
             white-space: nowrap;
+
         }
 
         table.admin-table td {
@@ -224,7 +239,6 @@
             background: #9b2c2c;
         }
 
-        /* Inline editing */
         td.editable {
             cursor: pointer;
             position: relative;
@@ -291,6 +305,34 @@
         .btn-export:hover {
             background: #1a365d;
         }
+
+        #resetModal input[type="password"] {
+            display: block !important;
+            width: 100% !important;
+            padding: 8px 12px !important;
+            border: 1px solid #ccc !important;
+            border-radius: 6px !important;
+            margin-bottom: 12px !important;
+            font-size: 14px !important;
+            height: 38px !important;
+            box-sizing: border-box !important;
+            background: #fff !important;
+            color: #2d3748 !important;
+        }
+
+        #emp_table th:first-child,
+        #emp_table td:first-child {
+            width: 50px;
+            max-width: 50px;
+            min-width: 50px;
+            text-align: center;
+            padding: 9px 6px;
+        }
+
+        #emp_table th:nth-child(2),
+        #emp_table td:nth-child(2) {
+            width: auto;
+        }
     </style>
 </head>
 
@@ -298,7 +340,6 @@
     <div class="admin-header">
         <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
             <img src="BBH-logo-1-1B.png" alt="BBH Logo">
-
             <h1 style="font-size:16px; color:#fff; margin:0;">Admin Dashboard</h1>
         </div>
         <div class="admin-info">
@@ -325,15 +366,15 @@
                             style="width:100%; padding-right:36px;">
                         <span onclick="toggleEmpPass()"
                             style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
-                            <img id="eye_icon" src="icons8-eye-50.png" style="width:18px; height:18px; "
-                                class="eye-img">
+                            <img id="eye_icon" src="icons8-eye-50.png" style="width:18px; height:18px;" class="eye-img">
                         </span>
-                    </div> <button onclick="addEmployee()">Add Employee</button>
+                    </div>
+                    <button onclick="addEmployee()">Add Employee</button>
                 </div>
                 <div id="add_emp_status"></div>
             </div>
 
-            <div class="admin-card">
+            <div class="admin-card" style="width: 500px;">
                 <h2>Current Employees</h2>
                 <div class="status-msg" id="emp_status"></div>
                 <div class="admin-table-wrap">
@@ -365,31 +406,29 @@
                     <table class="admin-table" id="sub_table">
                         <thead>
                             <tr>
+                                <th>Edit</th>
+                                <th>Action</th>
                                 <th>ID</th>
+                                <th>Submitted By</th>
                                 <th>Form No</th>
                                 <th>Operation</th>
                                 <th>Given By</th>
                                 <th>Date</th>
                                 <th>Department</th>
                                 <th>Incident Description</th>
-                                <th>Error Category</th>
+                                <th>Error<br>Category</th>
                                 <th>Root Cause</th>
                                 <th>Immediate Correction</th>
                                 <th>Corrective Action</th>
                                 <th>Preventive Action</th>
-                                <th>Patient Consequences</th>
-                                <th>Edit</th>
-                                <th>Action</th>
+                                <th>Patient<br>Consequences</th>
                             </tr>
-
                         </thead>
                         <tbody id="sub_tbody">
                             <tr>
-                                <td colspan="14" class="loading">Loading submissions...</td>
+                                <td colspan="16" class="loading">Loading submissions...</td>
                             </tr>
-
                         </tbody>
-
                     </table>
                 </div>
                 <div style="margin-top: 12px;">
@@ -399,6 +438,26 @@
         </div>
 
     </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetModal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+        <div style="background:#fff; margin:15% auto; padding:30px; border-radius:8px; max-width:380px;">
+            <h3 style="margin-bottom:20px; color:#1a365d;">Reset Password</h3>
+            <p id="reset_emp_label" style="margin-bottom:16px; font-weight:bold; color:#4a5568;"></p>
+            <label>New Password:</label><br>
+            <input type="password" id="reset_new_pass" placeholder="Min 6 characters"><br>
+            <label>Confirm Password:</label><br>
+            <input type="password" id="reset_confirm_pass" placeholder="Re-enter password"><br>
+            <span id="reset_error" style="color:red; font-size:13px; display:block; margin-bottom:12px;"></span>
+            <button onclick="submitResetPassword()"
+                style="background:#1a365d; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; margin-right:8px;">Reset
+                Password</button>
+            <button onclick="closeResetModal()"
+                style="background:#ccc; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
     <div id="exportModal"
         style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
         <div style="background:#fff; margin:10% auto; padding:30px; border-radius:8px; max-width:400px;">

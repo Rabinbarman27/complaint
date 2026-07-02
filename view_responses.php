@@ -12,7 +12,7 @@ if (!isset($_SESSION['employee_id'])) {
 include 'connection.php';
 header('Content-Type: application/json');
 
-$sql = "SELECT id, form_no, Operation, Given_by, Date_of_submission, Depatment_section,
+$sql = "SELECT id, form_no, submitted_by, Operation, Given_by, Date_of_submission, Depatment_section,
         Incident_description, Main_Error_category, Sub_Error_categor,
         avg_impact_score, avg_freq_score, avg_risk_score,
         root_cause, immediate_correction, corrective_action,

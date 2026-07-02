@@ -76,7 +76,8 @@ function loadEmployees() {
                     <td>${i + 1}</td>
                     <td>${escapeHtml(emp.employee_id)}</td>
                     <td>
-                        <button class="btn-delete" data-empid="${escapeHtml(emp.employee_id)}" onclick="deleteEmployee(this.dataset.empid)">Delete</button>
+                        <button class="btn-delete" data-empid="${escapeHtml(emp.employee_id)}" onclick="deleteEmployee(this.dataset.empid)">✖️</button>
+                        <button class="btn-edit" style=" margin-top: 10px; font-size:14px ;"data-empid="${escapeHtml(emp.employee_id)}" onclick="openResetModal(this.dataset.empid)">  🔒  </button>
                     </td>
                 </tr>
             `).join('');
@@ -166,16 +167,23 @@ function loadSubmissions() {
             if (!result) return;
             const tbody = document.getElementById('sub_tbody');
             if (!result.success) {
-                tbody.innerHTML = `<tr><td colspan="15">${escapeHtml(result.error)}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="16">${escapeHtml(result.error)}</td></tr>`;
                 return;
             }
             if (!result.data || result.data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="15">No submissions yet.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="16">No submissions yet.</td></tr>';
                 return;
             }
             tbody.innerHTML = result.data.map(row => `
                 <tr data-id="${escapeHtml(row.id)}">
+                <td>
+                        <button class="btn-edit" onclick="toggleEditRow(this)" title="Edit row">✏️</button>
+                    </td>
+                    <td>
+                        <button class="btn-delete" onclick="deleteSubmission(${escapeHtml(row.id)})">✖️</button>
+                    </td>
                     <td>${escapeHtml(row.id)}</td>
+                    <td>${escapeHtml(row.submitted_by)}</td>
                     <td>${escapeHtml(row.form_no)}</td>
                     <td >${escapeHtml(row.operation)}</td>
                     <td >${escapeHtml(row.given_by)}</td>
@@ -188,18 +196,13 @@ function loadSubmissions() {
                     <td class="editable" data-field="corrective_action">${escapeHtml(row.corrective_action)}</td>
                     <td class="editable" data-field="preventive_action">${escapeHtml(row.preventive_action)}</td>
                     <td class="editable" data-field="patient_consequences">${escapeHtml(row.patient_consequences)}</td>
-                    <td>
-                        <button class="btn-edit" onclick="toggleEditRow(this)" title="Edit row">✏️</button>
-                    </td>
-                    <td>
-                        <button class="btn-delete" onclick="deleteSubmission(${escapeHtml(row.id)})">Delete</button>
-                    </td>
+                    
                 </tr>
             `).join('');
         })
         .catch(err => {
             console.error('Load submissions error:', err);
-            document.getElementById('sub_tbody').innerHTML = '<tr><td colspan="15">Failed to load submissions.</td></tr>';
+            document.getElementById('sub_tbody').innerHTML = '<tr><td colspan="16">Failed to load submissions.</td></tr>';
         });
 }
 
@@ -333,4 +336,61 @@ function toggleEmpPass() {
         btn.textContent = '💾';
         btn.title = 'Save changes';
     }
+}
+let resetTargetId = '';
+
+function openResetModal(employeeId) {
+    resetTargetId = employeeId;
+    document.getElementById('reset_emp_label').textContent = 'Employee: ' + employeeId;
+    document.getElementById('reset_new_pass').value = '';
+    document.getElementById('reset_confirm_pass').value = '';
+    document.getElementById('reset_error').textContent = '';
+    document.getElementById('resetModal').style.display = 'block';
+}
+
+function closeResetModal() {
+    document.getElementById('resetModal').style.display = 'none';
+}
+
+function submitResetPassword() {
+    const newPass = document.getElementById('reset_new_pass').value;
+    const confirmPass = document.getElementById('reset_confirm_pass').value;
+    const errorEl = document.getElementById('reset_error');
+
+    errorEl.textContent = '';
+
+    if (!newPass || !confirmPass) {
+        errorEl.textContent = 'Both fields are required.';
+        return;
+    }
+    if (newPass.length < 6) {
+        errorEl.textContent = 'Password must be at least 6 characters.';
+        return;
+    }
+    if (newPass !== confirmPass) {
+        errorEl.textContent = 'Passwords do not match.';
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('employee_id', resetTargetId);
+    formData.append('new_password', newPass);
+
+    fetch('admin_reset_password.php', { method: 'POST', body: formData })
+        .then(res => {
+            if (res.status === 401) { window.location.href = 'admin_login.html'; return; }
+            return res.json();
+        })
+        .then(result => {
+            if (!result) return;
+            if (result.success) {
+                closeResetModal();
+                showStatus('emp_status', `Password for "${resetTargetId}" reset successfully.`, 'success');
+            } else {
+                errorEl.textContent = result.error || 'Failed to reset password.';
+            }
+        })
+        .catch(() => {
+            errorEl.textContent = 'Network error. Please try again.';
+        });
 }

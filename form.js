@@ -307,3 +307,12 @@ document.addEventListener('DOMContentLoaded', function () {
         cb.addEventListener('change', updateFormNumber);
     });
 });
+// Show submitted by
+fetch('check_session.php')
+    .then(res => res.json())
+    .then(result => {
+        const el = document.getElementById('submitted_by_display');
+        if (el && result.employee_id) {
+            el.textContent = result.employee_id;
+        }
+    });

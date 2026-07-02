@@ -16,7 +16,7 @@ $result = pg_query(
             incident_description, main_error_category, sub_error_categor,
             root_cause, avg_impact_score, avg_freq_score, avg_risk_score,
             immediate_correction, corrective_action, preventive_action, 
-            patient_consequences, id
+            patient_consequences, submitted_by, id
      FROM feedback_complaint_data
      ORDER BY id DESC"
 );
