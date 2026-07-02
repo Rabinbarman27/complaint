@@ -25,7 +25,7 @@ function handleAdminLogin() {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                window.location.href = 'admin_dashboard.html';
+                window.location.href = 'admin_dashboard.php';
             } else {
                 errorEl.textContent = data.error || 'Invalid Admin ID or Password.';
                 loginBtn.disabled = false;

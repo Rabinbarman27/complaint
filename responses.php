@@ -1,4 +1,10 @@
-
+<?php
+session_start();
+if (!isset($_SESSION['employee_id'])) {
+    header('Location: index.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +21,7 @@
         <h1>Submitted Responses</h1>
 
         <div class="responses-top-bar">
-            <a href="dashboard.html" class="dashboard-btn">← Back to Dashboard</a>
+            <a href="dashboard.php" class="dashboard-btn">← Back to Dashboard</a>
         </div>
 
         <div id="responses_status">Loading responses…</div>

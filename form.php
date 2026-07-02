@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['employee_id'])) {
+    header('Location: index.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -455,7 +462,7 @@
             <!-- SUBMIT (Export Data now lives on the dashboard) -->
             <div class="form-footer">
                 <button type="submit">Submit</button>
-                <a href="dashboard.html" class="btn-link">Back to Dashboard</a>
+                <a href="dashboard.php" class="btn-link">Back to Dashboard</a>
             </div>
 
         </form>

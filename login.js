@@ -25,7 +25,7 @@ function handleLogin() {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'dashboard.php';
             } else {
                 errorEl.textContent = data.error || "Invalid Employee ID or Password.";
                 loginBtn.disabled = false;

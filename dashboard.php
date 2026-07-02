@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['employee_id'])) {
+    header('Location: index.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,13 +50,13 @@
             <div class="dashboard-card">
                 <h2>File a Complaint</h2>
                 <p>Submit a new complaint or feedback form.</p>
-                <a href="form.html" class="dashboard-btn">Go to Form</a>
+                <a href="form.php" class="dashboard-btn">Go to Form</a>
             </div>
 
             <div class="dashboard-card">
                 <h2>View Responses</h2>
                 <p>See all submitted complaint and feedback records.</p>
-                <a href="responses.html" class="dashboard-btn">View Responses</a>
+                <a href="responses.php" class="dashboard-btn">View Responses</a>
             </div>
 
             <div class="dashboard-card">
@@ -81,8 +88,8 @@
         </div>
     </div>
     
-    <script src="dashboard.js"></script>
     <script src="auth-guard.js"></script>
+    <script src="dashboard.js"></script>
 
 </body>
 
